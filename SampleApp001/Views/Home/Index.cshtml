@@ -1,18 +1,21 @@
 ﻿@model Songapp.ViewModel.SongIndexViewModel
+<!--SongIndexViewModelを使用することを宣言 -->
 
 @{
     ViewData["Title"] = "Song Page";
 }
+<!--タイトルをSong Pageに設定 -->
 
-<h2>楽曲検索</h2>
+<h2>楽曲検索</h2><!--画面の大見出しとして楽曲検索と表示 -->
 <form>
-    <input type="text" asp-for="Keyword" placeholder="キーワードを入力してください" />
-    <input type="submit" class="btn btn-primary" value="検索" />
+    <input type="text" asp-for="Keyword" placeholder="キーワードを入力してください" /><!--キーワードを入力するためのテキストボック -->
+    <input type="submit" class="btn btn-primary" value="検索" /><!--検索を実行するための送信ボタン -->
     <div>
-        <span asp-validation-for="Keyword" class="text-danger"></span>
+        <span asp-validation-for="Keyword" class="text-danger"></span><!-- キーワードの入力欄にエラーがあった場合、その対象項目のすぐ下にエラーメッセージを赤い文字で表示-->
     </div>
 <label>追加はこちら</label>
-<a asp-action="Edit" asp-route-id = 0>
+    <a asp-action="Edit" asp-route-id=0>
+        <!-- 新規追加画面へ移動するためのリンク-->
     追加
 </a>
 
@@ -24,31 +27,37 @@
             <th>作曲者</th>
             <th>年代</th>
         </tr>
-    </thead>
-    <tbody>
+        </thead><!--楽曲一覧を表示するための表を作成 -->
+        <tbody>
+            
         @foreach (var item in Model.Songs)
-        {
+            {
+                <!--データベースから取得した楽曲リストの中身を、C#の foreach を使って1件ずつ取り出し、リストの数だけ以下の処理を繰り返します-->
             <tr>
+                    <!--表のそれぞれのセルにリアルタイムに出力 -->
                 <td>@item.Song</td>
                 <td>@item.Group</td>
                 <td>@item.Artist</td>
                 <td>@item.History</td>
-                <td class="border-bottom-0">
+                    <td class="border-bottom-0">
+                        <!--データの右端の列に、下向きの矢印が書かれたボタンを配置 -->
                     <button type="button" class="btn btn-link text-decoration-underline" onclick="slide(this,@item.Id)">
                         ⇩
                     </button>
                 </td>
                 </tr>
                 <tr>
-                <td class ="border-bottom-0" colspan="4">
-                    <div id="detail@(item.Id)" style="display:none">
+                    <td class="border-bottom-0" colspan="4">
+                        <!--メインデータ行のすぐ真下に、もう1行テーブルの行を追加 -->
+                        <div id="detail@(item.Id)" style="display:none">
+                            <!-- 楽曲ごとにユニークなID名が自動で割り振られます-->
                             <div>
-                    歌詞
+                                歌詞
                     @item.Lyric
                     </div>
                     <div>
                             <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success">
-                    変更する
+                                    変更する<!-- 詳細エリアの中に、その曲を編集するための変更するボタンを設置-->
                     </a>
                 </div>
                 </div>
