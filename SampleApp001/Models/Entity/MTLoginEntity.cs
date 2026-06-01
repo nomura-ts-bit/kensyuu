@@ -18,55 +18,55 @@ namespace Songapp.Models.Entity
     /// <summary>
     /// 商品マスタエンティティクラス
     /// </summary>
-    [Table("mt_login")]
-    [Serializable]
+    [Table("mt_login")]     // DBのテーブル指定
+    [Serializable]          // データを保存できる形式に変換
     public class MTLoginEntity
     {
         /// <summary>
         /// 主キー
         /// </summary>
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("id")]
+        [Key]       // 主キー設定
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]   // 自動採番(番号振り)
+        [Column("id")]      // DBのカラム(列)の指定
         public int Id { get; set; } = 0;
 
         /// <summary>
         /// ユーザー名
         /// </summary>
-        [Display(Name = "ユーザー名")]
-        [Column("username")]
-        [Required]
+        [Display(Name = "ユーザー名")]       // 画面表示
+        [Column("username")]    // DBのカラム(列)の指定
+		[Required]      // 必須入力にする
         public string Username { get; set; } = string.Empty;
 
         /// <summary>
         /// パスワード
         /// </summary>
-        [Display(Name = "パスワード")]
-        [Column("password")]
-        [Required]
-        public string Password { get; set; } = string.Empty;
+        [Display(Name = "パスワード")]       // 画面表示
+		[Column("password")]    // DBのカラム(列)の指定
+		[Required]      // 必須入力にする
+		public string Password { get; set; } = string.Empty;
 
         /// <summary>
         /// 削除フラグ
         /// </summary>
-        [Display(Name = "削除フラグ")]
-        [Column("is_deleted")]
-        [Required]
-        public int IsDeleted { get; set; } = 0;
+        [Display(Name = "削除フラグ")]       // 画面表示
+		[Column("is_deleted")]      // DBのカラム(列)の指定
+		[Required]      // 必須入力にする
+		public int IsDeleted { get; set; } = 0;
 
         /// <summary>
         /// 新規作成日時
         /// </summary>
-        [Display(Name = "新規作成日時")]
-        [Column("create_date")]
-        public DateTime? CreateDate { get; set; } = DateTime.Now;
+        [Display(Name = "新規作成日時")]      // 画面表示
+		[Column("create_date")]     // DBのカラム(列)の指定
+		public DateTime? CreateDate { get; set; } = DateTime.Now;
 
         /// <summary>
         /// 更新日時
         /// </summary>
-        [Display(Name = "更新日時")]
-        [Column("update_date")]
-        public DateTime? UpdateDate { get; set; } = DateTime.Now;
+        [Display(Name = "更新日時")]        // 画面表示
+		[Column("update_date")]     // DBのカラム(列)の指定
+		public DateTime? UpdateDate { get; set; } = DateTime.Now;
 
     }
 }
