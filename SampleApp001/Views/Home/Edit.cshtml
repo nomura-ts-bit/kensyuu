@@ -1,0 +1,39 @@
+﻿@model Songapp.ViewModel.SongEditViewModel
+
+@{
+    ViewData["Title"] = "Edit Page";
+}
+
+<h2>楽曲管理
+<button type="button" class="btn btn-primary" onclick="history.back()">戻る</button>
+</h2>
+<div asp-validation-summary="All" class="text-danger" ></div>
+<form method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+
+    <div>
+        <label>曲名</label>
+        <input type="text" asp-for="Edit_Song" placeholder="曲名を入力してください" />       
+   </div>
+   <div> 
+        <label>グループ名</label>
+        <input type="text" asp-for="Edit_Group" placeholder="グループ名を入力してください" />
+   </div>
+   <div>
+        <label>作者名</label>
+        <input type="text" asp-for="Edit_Artist" placeholder="作者名を入力してください" />
+   </div>
+   <div>
+        <label>年代</label>
+        <input type="text" asp-for="Edit_History" placeholder="年代を入力してください" />
+    </div>
+    <div>
+        <label>歌詞</label> 
+        <input type="text" asp-for="Edit_Lyric" placeholder="歌詞を入力してください" />
+    </div>
+        <input type="submit" class="btn btn-success" value="変更する" asp-action="Edit" onclick= "return confirm('この内容で変更しますか？')"/>
+    <input type="submit" class="btn btn-danger" value="削除する" asp-action="Delete" onclick="return confirm('本当に削除しますか？')" />
+</form>
+
+
