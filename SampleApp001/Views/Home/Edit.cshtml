@@ -1,39 +1,48 @@
-﻿@model Songapp.ViewModel.SongEditViewModel
+﻿@model Songapp.ViewModel.SongEditViewModel//SongEditViewModel というデータ構造（箱）を使用することを宣言
 
 @{
     ViewData["Title"] = "Edit Page";
 }
-
+<!-- C#のコードを実行するブロック,ブラウザのタブなどに表示されるページのタイトル）に「Edit Page」という文字列を設定-->
 <h2>楽曲管理
-<button type="button" class="btn btn-primary" onclick="history.back()">戻る</button>
+    
+    <button type="button" class="btn btn-primary" onclick="history.back()">戻る</button><!--画面の大見出し（<h2>）として「楽曲管理」と表示し、その右側に「戻る」ボタンを配置しています -->
 </h2>
-<div asp-validation-summary="All" class="text-danger" ></div>
+<div asp-validation-summary="All" class="text-danger"></div><!-- ViewModel側で設定した文字数制限などのルールに違反した場合、ここにすべてのエラーメッセージが赤い文字で箇条書き形式で自動表示-->
 <form method="post">
-    @Html.AntiForgeryToken()
+    <!--ユーザーが入力したデータをサーバーに送信するためのフォーム -->
+    @Html.AntiForgeryToken()<!-- --><!--悪意のある不正なリクエスト（攻撃）を防ぐためのセキュリティ対策コード -->
     <input type="hidden" asp-for="Id" />
-
+    <!-- 画面上には見えませんが、データを更新・削除するときに「どの曲を対象にしているか」をサーバーに伝えるために必須の行-->
     <div>
         <label>曲名</label>
-        <input type="text" asp-for="Edit_Song" placeholder="曲名を入力してください" />       
+        <input type="text" asp-for="Edit_Song" placeholder="曲名を入力してください" />
+        <!-- 曲名の入力欄-->
    </div>
    <div> 
         <label>グループ名</label>
         <input type="text" asp-for="Edit_Group" placeholder="グループ名を入力してください" />
+        <!--グループ名の入力欄 -->
    </div>
    <div>
         <label>作者名</label>
         <input type="text" asp-for="Edit_Artist" placeholder="作者名を入力してください" />
+        <!--作者名の入力欄 -->
    </div>
    <div>
         <label>年代</label>
         <input type="text" asp-for="Edit_History" placeholder="年代を入力してください" />
+        <!--年代の入力欄 -->
     </div>
     <div>
         <label>歌詞</label> 
         <input type="text" asp-for="Edit_Lyric" placeholder="歌詞を入力してください" />
+        <!--歌詞の入力欄 -->
     </div>
         <input type="submit" class="btn btn-success" value="変更する" asp-action="Edit" onclick= "return confirm('この内容で変更しますか？')"/>
+    <!-- 変更するボタン,キャンセルを押すと送信を中断-->
     <input type="submit" class="btn btn-danger" value="削除する" asp-action="Delete" onclick="return confirm('本当に削除しますか？')" />
+    <!--削除するボタン -->
 </form>
 
 

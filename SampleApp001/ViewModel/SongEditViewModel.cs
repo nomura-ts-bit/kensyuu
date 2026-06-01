@@ -1,13 +1,13 @@
 ﻿namespace Songapp.ViewModel
 {
-    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations;//文字数制限などを設定するための機能
 
-    public class SongEditViewModel
+    public class SongEditViewModel//編集画面の入力内容を丸ごと保持して持ち運ぶための箱
     {
         /// <summary>
         /// 楽曲のIDを取得または設定します.
         /// </summary>
-        public int Id { get; set; }
+        public int Id { get; set; }//編集対象となる楽曲の識別番号（ID）を保持するプロパティ
 
         [StringLength(50, ErrorMessage = "曲名は50文字以内で入力してください")]
         public string? Edit_Song { get; set; }
