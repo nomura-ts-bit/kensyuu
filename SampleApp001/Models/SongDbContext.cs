@@ -13,30 +13,32 @@ using Songapp.Models.Entity;
 
 namespace Songapp.Models
 {
-    /// <summary>
-    /// DBコンテキスト
-    /// </summary>
-    public class SongDbContext : DbContext
+	/// <summary>
+	/// DBコンテキスト
+	/// データベースとアプリケーションを仲介し、データの送受信を管理する中心クラス
+	/// </summary>
+	public class SongDbContext : DbContext      // DbContextを継承
     {
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        public SongDbContext()
+		/// <summary>
+		/// ツールやテストで使用される空のコンストラクタ
+		/// </summary>
+		public SongDbContext()
         {
         }
 
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        /// <param name="options">DBコンテキストオプション</param>
-        public SongDbContext(DbContextOptions<SongDbContext> options) : base(options)
+		/// <summary>
+		/// データベースの種類や接続先の情報を、DbContextに渡すコンストラクタ
+		/// </summary>
+		/// <param name="options">DBコンテキストオプション</param>
+		/// 
+		public SongDbContext(DbContextOptions<SongDbContext> options) : base(options)
         {
         }
 
-        /// <summary>
-        /// 商品マスタ
-        /// </summary>
-        public DbSet<MTSongEntity> MTSong { get; set; }
-        public DbSet<MTLoginEntity> MTLogin { get; set; }
+		// 商品マスタ（MTSongテーブル）にアクセスするためのプロパティ
+		public DbSet<MTSongEntity> MTSong { get; set; }
+
+		// ログインマスタ（MTLoginテーブル）にアクセスするためのプロパティ
+		public DbSet<MTLoginEntity> MTLogin { get; set; }
     }
 }
