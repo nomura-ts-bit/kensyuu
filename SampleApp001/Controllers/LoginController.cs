@@ -22,9 +22,9 @@ namespace Songapp.Controllers // このプログラムがどこに属してい�
     public class LoginController : BaseController<HomeController> // 共通機能を持つBaseControllerを親としたクラス
     {
         /// <summary>
-        /// コンストラクタ.
+        /// 初期セットアップ.
         /// </summary>
-        /// <param name="context">DBコンテテキスト.</param>
+        /// <param name="context">DBコンテキスト(接続管理).</param>
         /// <param name="logger">ロガー.</param>
         /// <param name="environment">環境.</param>
         private SongModel service; // 外部からの盗み見を防ぐ(private)空箱宣言（service）

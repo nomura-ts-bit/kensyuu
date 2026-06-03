@@ -8,11 +8,11 @@
 // 更新日：
 // -----------------------------------------------------------------------
 
-namespace Songapp.Models.Entity
+namespace Songapp.Models.Entity // ネームスペースの定義(住所)
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
+    using System; // C#の最も基本的な心臓部（日付のDateTimeや、様々な基本データ型など）を引用
+    using System.ComponentModel.DataAnnotations; // 画面からの入力ルール（[Required]で必須、[StringLength]で文字数制限など）を設定する道具を引用
+    using System.ComponentModel.DataAnnotations.Schema; // データベースのテーブル構造（[Table]でテーブル名指定、[ForeignKey]で外部キー設定など）をカスタマイズする道具を引用
 
     /// <summary>
     /// 楽曲マスタエンティティクラス.

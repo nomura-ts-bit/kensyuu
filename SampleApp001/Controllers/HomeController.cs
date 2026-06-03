@@ -28,9 +28,9 @@ namespace Songapp.Controllers // このプログラムがどこに属してい�
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HomeController"/> class.
-        /// コンストラクタ.
+        /// 初期セットアップ.
         /// </summary>
-        /// <param name="context">DBコンテキスト.</param>
+        /// <param name="context">DBコンテキスト(接続管理).</param>
         /// <param name="logger">ロガー.</param>
         /// <param name="environment">環境.</param>
         public HomeController(SongDbContext context, ILogger<HomeController> logger, IWebHostEnvironment environment) // 起動時に自動で動く初期設定（引数で3つの道具を受け取る）
