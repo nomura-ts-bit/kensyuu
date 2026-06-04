@@ -32,7 +32,7 @@
             
         @foreach (var item in Model.Songs)
             {
-                <!--データベースから取得した楽曲リストの中身を、C#の foreach を使って1件ずつ取り出し、リストの数だけ以下の処理を繰り返します-->
+                <!--データベースから取得した楽曲リストの中身を、C#の foreach を使って1件ずつ取り出し、リストの数だけ以下の処理を繰り返す-->
             <tr>
                     <!--表のそれぞれのセルにリアルタイムに出力 -->
                 <td>@item.Song</td>
@@ -50,7 +50,7 @@
                     <td class="border-bottom-0" colspan="4">
                         <!--メインデータ行のすぐ真下に、もう1行テーブルの行を追加 -->
                         <div id="detail@(item.Id)" style="display:none">
-                            <!-- 楽曲ごとID名が自動で割り振られます-->
+                            <!-- 楽曲ごとID名が自動で割り振られる-->
                             <div>
                                 歌詞
                     @item.Lyric
@@ -70,11 +70,11 @@
 
 @section Scripts{<script>
     function slide(btn,id){
-    $('#detail'+id).slideToggle(function(){
-            if ($('#detail'+id).is(':visible')) {
-                  $(btn).text('⇧');
+        $('#detail'+id).slideToggle(function(){// 1. 対象の詳細エリア（#detail+ID）の表示・非表示をアニメーション付きで切り替える
+             if ($('#detail'+id).is(':visible')) {// 2. アニメーション完了後、現在の表示状態（見えているかどうか）を判定          
+                 $(btn).text('⇧');// 見えているなら、ボタンの文字を⇧にする
               } else {
-                    $(btn).text('⇩');
+                  $(btn).text('⇩'); // 見えていないなら、ボタンの文字を⇩にする
                 }
       })
     }
