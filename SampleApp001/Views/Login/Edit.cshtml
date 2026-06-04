@@ -15,7 +15,7 @@
     @Html.AntiForgeryToken()            <!-- 不正アクセスを弾く処理 -->
     <div>                               <!-- ユーザー名の項目をひとかたまりにする兼改行 -->
         <label>ユーザー名</label>        <!-- 何の項目なのかを表す -->
-        <input type="text" asp-for="Username" placeholder="ユーザー名を入力してください" /> <!-- Usernameと直結させるタグヘルパー -->
+        <input type="text" asp-for="Username" placeholder="ユーザー名を入力してください" /> <!-- Usernameと直結させるタグヘルパー(他のファイルと中身を同期できる便利機能) -->
     </div>
     <div>                               <!-- パスワード用の項目をひとかたまりにする兼改行 -->
         <label>パスワード</label>        <!-- パスワード用を表す文字 -->
