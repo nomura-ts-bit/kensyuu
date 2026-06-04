@@ -15,4 +15,10 @@
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 	</ItemGroup>
+	<ItemGroup>
+	  <EditorConfigFiles Remove="C:\Users\nagoya-study049\source\repos\kensyuu\SampleApp001\.editorconfig" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Include="C:\Users\nagoya-study049\source\repos\kensyuu\SampleApp001\.editorconfig" />
+	</ItemGroup>
 </Project>

@@ -21,5 +21,5 @@
         <label>パスワード</label>        <!-- パスワード用を表す文字 -->
         <input type="password" asp-for="Password" placeholder="パスワードを入力してください" /> <!-- Passwordと直結させるタグヘルパー(type="password"によって伏字化) -->
     </div>
-    <input type="submit" class="btn btn-primary" value="新規作成" asp-action="Edit" /> <!--コントローラーのEdit処理へデータを送る -->
+    <input type="submit" class="btn btn-primary" value="新規作成" asp-action="Edit" onclick="return confirm('この内容で登録しますか？')" /> <!--コントローラーのEdit処理へデータを送る -->
 </form>
