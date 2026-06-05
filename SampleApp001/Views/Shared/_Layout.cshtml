@@ -33,7 +33,7 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3"> <!--検索画面や編集画面など、呼び出された機能の主要なコンテンツが配置される中心領域（下部に余白を確保）-->
-            @RenderBody() 呼び出された各画面（Ｉｎｄｅｘ．ｃｓｈｔｍｌやＥｄｉｔ．ｃｓｈｔｍｌなど）の本体コードがここに動的に埋め込まれる最重要処理-->
+            @RenderBody() <!--呼び出された各画面（Ｉｎｄｅｘ．ｃｓｈｔｍｌやＥｄｉｔ．ｃｓｈｔｍｌなど）の本体コードがここに動的に埋め込まれる最重要処理-->
         </main>
     </div>
 
@@ -45,6 +45,6 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script> <!--画面の動的制御や非同期通信、要素のアニメーションを動かすためのｊＱｕｅｒｙライブラリの読み込み-->
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> <!--ドロップダウンやスマホ用メニュー開閉などのＢｏｏｔｓｔｒａｐの動的機能を有効化するスクリプトの読み込み-->
     <script src="~/js/site.js" asp-append-version="true"></script> <!--アプリケーション全体で共通して使用する独自に実装した共通ＪａｖａＳｃｒｉｐｔファイルの読み込み-->
-    @await RenderSectionAsync("Scripts", required: false) 各個別画面の最下部で定義された画面専用スクリプト（＠section Scripts）をこの位置に非同期で結合して展開する処理-->
+    @await RenderSectionAsync("Scripts", required: false) <!--各個別画面の最下部で定義された画面専用スクリプト（＠section Scripts）をこの位置に非同期で結合して展開する処理-->
 </body>
 </html>
