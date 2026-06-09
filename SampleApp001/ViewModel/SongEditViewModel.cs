@@ -10,9 +10,11 @@
         public int Id { get; set; }//編集対象となる楽曲の識別番号（ID）を保持するプロパティ
 
         [StringLength(50, ErrorMessage = "曲名は50文字以内で入力してください")]
+        [Required(ErrorMessage = "曲名は必須です")]
         public string? Edit_Song { get; set; }
 
         [StringLength(20, ErrorMessage = "グループ名は20文字以内で入力してください")]
+        [Required(ErrorMessage = "グループ名は必須です")]
         public string? Edit_Group { get; set; }
 
         [StringLength(20, ErrorMessage = "作曲者名は20文字以内で入力してください")]

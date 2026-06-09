@@ -1,25 +1,42 @@
-﻿@model Songapp.ViewModel.LoginViewModel // 画面で使うviewmodelの指定 
-
+﻿@model Songapp.ViewModel.LoginViewModel //画面で使うviewmodelの指定
 @{
-    ViewData["Title"] = "Edit Page";    <!-- ブラウザのタブに表示される名前を設定 -->
-    Layout = null;                      <!-- 共通メニューを使わず単体で画面を作る設定 -->
+ViewData["Title"] = "Edit Page"; //ブラウザのタブに表示される名前を設定    
+Layout = null; //共通メニューを使わず単体で画面を作る設定
 }
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" /> <!-- Bootstrapの読み込み -->
-
-<h2>                                    <!-- 画面のタイトル -->
-    新規登録
-    <button type="button" class="btn btn-link text-decoration-underline" onclick="history.back()">ログイン</button> <!-- 1つ前の画面に戻る -->
-</h2>
-
-<form method="post">                     <!-- 入力内容をまとめてサーバーへ送る -->
-    @Html.AntiForgeryToken()            <!-- 不正アクセスを弾く処理 -->
-    <div>                               <!-- ユーザー名の項目をひとかたまりにする兼改行 -->
-        <label>ユーザー名</label>        <!-- 何の項目なのかを表す -->
-        <input type="text" asp-for="Username" placeholder="ユーザー名を入力してください" /> <!-- Usernameと直結させるタグヘルパー(他のファイルと中身を同期できる便利機能) -->
-    </div>
-    <div>                               <!-- パスワード用の項目をひとかたまりにする兼改行 -->
-        <label>パスワード</label>        <!-- パスワード用を表す文字 -->
-        <input type="password" asp-for="Password" placeholder="パスワードを入力してください" /> <!-- Passwordと直結させるタグヘルパー(type="password"によって伏字化) -->
-    </div>
-    <input type="submit" class="btn btn-primary" value="新規作成" asp-action="Edit" onclick="return confirm('この内容で登録しますか？')" /> <!--コントローラーのEdit処理へデータを送る -->
-</form>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8" data-comment="ページの文字コードをＵＴＦ－８に設定して日本語の文字化けを完全に防ぐ" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" data-comment="閲覧する端末の画面幅に合わせて表示サイズを自動調整するレスポンシブ対応の設定" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" data-comment="外部デザインフレームワークであるブーストラップの読み込み" />
+</head>
+<body class="bg-light d-flex align-items-center justify-content-center vh-100">
+    <div class="card shadow" style="width: 100%; max-width: 400px;">
+        <div class="card-body p-4">
+            <h2 class="text-center mb-4" data-comment="画面中央に表示される見出し文字列を中央寄せにして下部に適切な余白を確保">新規登録</h2>
+            <form method="post">
+                @Html.AntiForgeryToken()
+                <div class="mb-3">
+                    <label class="form-label" data-comment="入力欄の上に配置される項目名ラベルをモダンなスタイルで表示">ユーザー名</label>
+                    <input type="text" asp-for="Username" class="form-control" placeholder="ユーザー名を入力してください" data-comment="Usernameと直結させるタグヘルパー(他のファイルと中身を同期できる便利機能)" />
+                    <div class="mt-1">
+                        <span asp-validation-for="Username" class="text-danger small" data-comment="ユーザー名の入力欄にエラーがあった場合、その対象項目のすぐ下にエラーメッセージを赤い文字で表示"></span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">パスワード</label>
+                    <input type="password" asp-for="Password" class="form-control" placeholder="パスワードを入力してください" data-comment="Passwordと直結させるタグヘルパー(type=passwordによって伏字化)" />
+                    <div class="mt-1">
+                        <span asp-validation-for="Password" class="text-danger small" data-comment="パスワードの入力欄にエラーがあった場合、その対象項目のすぐ下にエラーメッセージを赤い文字で表示"></span>
+                    </div>
+                </div>
+                <input type="submit" class="btn btn-primary w-100 mt-3 mb-4" value="新規作成" asp-action="Edit" onclick="return confirm('この内容で登録しますか？')" data-comment="コントローラーのEdit処理へデータを送る。登録前の確認ダイアログを表示" />
+                <div class="text-center pt-3 border-top">
+                    <p class="text-muted small mb-2" data-comment="ログイン画面へ戻るための案内テキスト">すでにアカウントをお持ちの方</p>
+                    <button type="button" class="btn btn-outline-secondary btn-sm w-100" onclick="history.back()" data-comment="ボタンクリック時にブラウザの履歴を1つ巻き戻してログイン画面へ戻る処理">ログイン画面へ戻る</button>
+                </div>
+            </form>
+        </div>
+    </div></body>
+</html>

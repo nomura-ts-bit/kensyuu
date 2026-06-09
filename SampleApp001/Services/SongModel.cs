@@ -16,7 +16,8 @@ namespace Songapp.Services//ネームスペースを定義(住所)
     using Songapp.Models;
     using SongApp.Models;
     using Songapp.Models.Entity;
-    using Songapp.ViewModel;//ここまで
+    using Songapp.ViewModel;
+    using Microsoft.AspNetCore.Http;
 
     /// <summary>
     /// 楽曲管理に関するビジネスロジックを提供するクラス.
@@ -29,11 +30,20 @@ namespace Songapp.Services//ネームスペースを定義(住所)
         /// </summary>
         /// <param name="context">DBコンテキスト.</param>
         /// <param name="logger">ロガーインスタンス.</param>
-        public SongModel(SongDbContext context, ILogger logger)
+        private readonly IHttpContextAccessor _httpContextAccessor;　// セッションを直接覗き込むための専用の通り道
+        public SongModel(SongDbContext context, ILogger logger, IHttpContextAccessor httpContextAccessor)
             : base(context, logger)//クラスのインスタンスが生成されるときに最初に動くコンストラクタ
                                    //データベース接続を管理する context と、ログを出力する logger を受け取り、そのまま親クラス（base）に引き渡して初期化
         {
+            // 受け取った道具を保存する
+            this._httpContextAccessor = httpContextAccessor;
         }
+
+        /// <summary>
+        /// クラス内のどこからでも「this.CurrentUsername」と書くだけで、
+        /// セッションからログイン中のユーザー名を一発で取得できる魔法の引き出し
+        /// </summary>
+        private string CurrentUsername => this._httpContextAccessor.HttpContext?.Session.GetString("LoginUser") ?? string.Empty;
 
         /// <summary>
         /// 条件に応じた楽曲の一覧を検索してViewModelに格納
@@ -51,6 +61,7 @@ namespace Songapp.Services//ネームスペースを定義(住所)
 
             var products = this._context.MTSong.AsNoTracking();
             //データベースの楽曲マスターテーブル（MTSong）からデータを取得する準備
+            products = products.Where(x => x.CreateUserName == this.CurrentUsername);
 
             if (indexvm.Keyword != null)//画面から検索キーワードが入力されているかどうかを判定
             {
@@ -85,6 +96,7 @@ namespace Songapp.Services//ネームスペースを定義(住所)
             if (editvm.Id == CommonModel.NewId)// もし画面から送られてきたIDが新規登録用IDが0だった場合、新しく真っ新なデータを作成し、データベースの追加対象（Add）として登録
             {
                 entity = new MTSongEntity();
+                entity.CreateUserName = this.CurrentUsername;
                 this._context.MTSong.Add(entity);
             }
             else

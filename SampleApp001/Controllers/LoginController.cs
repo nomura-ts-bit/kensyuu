@@ -11,6 +11,7 @@
 namespace Songapp.Controllers // このプログラムがどこに属しているかを表す
 {
     // 外部の道具の引用
+    using Microsoft.AspNetCore.Http; // ★【追加】セッションの保存機能（SetString）を使うための道具を引用
     using Microsoft.AspNetCore.Mvc; // MVC（Controller、IActionResult、HttpPostなど）の基本道具を引用
     using Songapp.Models; // プロジェクト内のModelsフォルダ（DbContextやエラー用Model）を引用
     using Songapp.Services; // ビジネスロジックを実行するseriveces（SongModel）を引用
@@ -29,10 +30,10 @@ namespace Songapp.Controllers // このプログラムがどこに属してい�
         /// <param name="environment">環境.</param>
         private SongModel service; // 外部からの盗み見を防ぐ(private)空箱宣言（service）
 
-        public LoginController(SongDbContext context, ILogger<HomeController> logger, IWebHostEnvironment environment) // 起動時に自動で動く初期設定（引数で3つの道具を受け取る）
+        public LoginController(SongDbContext context, ILogger<HomeController> logger, IWebHostEnvironment environment, IHttpContextAccessor httpContextAccessor) // 起動時に自動で動く初期設定（引数で3つの道具を受け取る）
             : base(context, logger, environment) // 親クラス（BaseController）の初期設定へ受け取った道具を渡す
         {
-            this.service = new SongModel(context, logger); // serviceのセッティング
+            this.service = new SongModel(context, logger, httpContextAccessor); // serviceのセッティング
         }
 
         /// <summary>
@@ -59,6 +60,11 @@ namespace Songapp.Controllers // このプログラムがどこに属してい�
                 this.ModelState.AddModelError(string.Empty, "ユーザー名またはパスワードが違います"); // 画面に表示する用のエラーメッセージを追加
                 return this.View(loginvm); // エラーメッセージを表示するために元のログイン画面へ返す
             }
+
+            // -----------------------------------------------------------------------
+            // ★【追加】ログインが成功したので、ユーザー名をセッション「LoginUser」に記憶する
+            // -----------------------------------------------------------------------
+            this.HttpContext.Session.SetString("LoginUser", loginvm.Username ?? string.Empty);
 
             return this.RedirectToAction("Index", "Home"); // ログインが成功したらホーム画面（HomeControllerのIndex）へ移動
         }

@@ -1,48 +1,71 @@
-﻿@model Songapp.ViewModel.SongEditViewModel//SongEditViewModel というデータ構造（箱）を使用することを宣言
-
+﻿@model Songapp.ViewModel.SongEditViewModel //SongEditViewModel というデータ構造（箱）を使用することを宣言
 @{
-    ViewData["Title"] = "Edit Page";
+    // Ｉｄが0なら「追加ページ」、それ以外なら「編集ページ」とタブのタイトルを自動切替    ViewData["Title"] = Model.Id == 0 ? "Create Page" : "Edit Page";
 }
-<!-- C#のコードを実行するブロック,ブラウザのタブなどに表示されるページのタイトル）に「Edit Page」という文字列を設定-->
-<h2>楽曲管理
-    
-    <button type="button" class="btn btn-primary" onclick="history.back()">戻る</button><!--画面の大見出し（<h2>）として「楽曲管理」と表示し、その右側に「戻る」ボタンを配置しています -->
-</h2>
-<div asp-validation-summary="All" class="text-danger"></div><!-- ViewModel側で設定した文字数制限などのルールに違反した場合、ここにすべてのエラーメッセージが赤い文字で箇条書き形式で自動表示-->
-<form method="post">
-    <!--ユーザーが入力したデータをサーバーに送信するためのフォーム -->
-    @Html.AntiForgeryToken()<!-- --><!--悪意のある不正なリクエスト（攻撃）を防ぐためのセキュリティ対策コード -->
-    <input type="hidden" asp-for="Id" />
-    <!-- 画面上には見えませんが、データを更新・削除するときに「どの曲を対象にしているか」をサーバーに伝えるために必須の行-->
-    <div>
-        <label>曲名</label>
-        <input type="text" asp-for="Edit_Song" placeholder="曲名を入力してください" />
-        <!-- 曲名の入力欄-->
-   </div>
-   <div> 
-        <label>グループ名</label>
-        <input type="text" asp-for="Edit_Group" placeholder="グループ名を入力してください" />
-        <!--グループ名の入力欄 -->
-   </div>
-   <div>
-        <label>作者名</label>
-        <input type="text" asp-for="Edit_Artist" placeholder="作者名を入力してください" />
-        <!--作者名の入力欄 -->
-   </div>
-   <div>
-        <label>年代</label>
-        <input type="text" asp-for="Edit_History" placeholder="年代を入力してください" />
-        <!--年代の入力欄 -->
+<div class="container mt-4" style="max-width: 600px;">
+    <div class="card shadow">
+        <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                @if (Model.Id == 0)
+                {
+                    <h2 class="mb-0" data-comment="Ｉｄが0（新規追加）の時に表示する見出し">楽曲追加</h2>
+                }
+                else
+                {
+                    <h2 class="mb-0" data-comment="Ｉｄが0以外（既存データの変更）の時に表示する見出し">楽曲管理</h2>
+                }
+                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="history.back()" data-comment="前の画面に戻る処理">戻る</button>
+            </div>
+            <form method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="Id" />
+                <div class="mb-3">
+                    <label class="form-label">曲名</label>
+                    <input type="text" asp-for="Edit_Song" class="form-control" placeholder="曲名を入力してください" />
+                    <div class="mt-1">
+                        <span asp-validation-for="Edit_Song" class="text-danger small"></span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">グループ名</label>
+                    <input type="text" asp-for="Edit_Group" class="form-control" placeholder="グループ名を入力してください" />
+                    <div class="mt-1">
+                        <span asp-validation-for="Edit_Group" class="text-danger small"></span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">作者名</label>
+                    <input type="text" asp-for="Edit_Artist" class="form-control" placeholder="作者名を入力してください" />
+                    <div class="mt-1">
+                        <span asp-validation-for="Edit_Artist" class="text-danger small"></span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">年代</label>
+                    <input type="text" asp-for="Edit_History" class="form-control" placeholder="年代を入力してください" />
+                    <div class="mt-1">
+                        <span asp-validation-for="Edit_History" class="text-danger small"></span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">歌詞</label>
+                    <textarea asp-for="Edit_Lyric" class="form-control" rows="6" placeholder="歌詞を入力してください" data-comment="複数行の改行入力に対応した大きめのテキストエリア領域"></textarea>
+                    <div class="mt-1">
+                        <span asp-validation-for="Edit_Lyric" class="text-danger small"></span>
+                    </div>
+                </div>
+                <div class="d-flex gap-2 mt-4 pt-3 border-top">
+                    @if (Model.Id == 0)
+                    {
+                        <input type="submit" class="btn btn-primary flex-grow-1" value="追加する" asp-action="Edit" onclick="return confirm('この内容で追加しますか？')" data-comment="新規追加の時は、青い「追加する」ボタンを表示" />
+                    }
+                    else
+                    {
+                        <input type="submit" class="btn btn-success flex-grow-1" value="変更する" asp-action="Edit" onclick="return confirm('この内容で変更しますか？')" data-comment="変更の時は、緑の「変更する」ボタンを表示" />
+                        <input type="submit" class="btn btn-danger" value="削除する" asp-action="Delete" onclick="return confirm('本当に削除しますか？')" data-comment="変更の時だけ「削除する」ボタンを表示（追加の時は非表示）" />
+                    }
+                </div>
+            </form>
+        </div>
     </div>
-    <div>
-        <label>歌詞</label> 
-        <input type="text" asp-for="Edit_Lyric" placeholder="歌詞を入力してください" />
-        <!--歌詞の入力欄 -->
-    </div>
-        <input type="submit" class="btn btn-success" value="変更する" asp-action="Edit" onclick= "return confirm('この内容で変更しますか？')"/>
-    <!-- 変更するボタン,キャンセルを押すと送信を中断-->
-    <input type="submit" class="btn btn-danger" value="削除する" asp-action="Delete" onclick="return confirm('本当に削除しますか？')" />
-    <!--削除するボタン -->
-</form>
-
-
+</div>

@@ -1,7 +1,6 @@
-// <copyright file="Program.cs" company="PlaceholderCompany">
+﻿// <copyright file="Program.cs" company="PlaceholderCompany">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
-
 /// <copyright file="Program.cs" company="SUS">
 /// (c) 株式会社エスユーエス All Rights Reserved.
 /// </copyright>
@@ -11,7 +10,6 @@
 /// 作成日：2026/02/26
 /// 更新日：
 /// -----------------------------------------------------------------------
-
 namespace Songapp
 {
     using Microsoft.EntityFrameworkCore;
@@ -30,8 +28,21 @@ namespace Songapp
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // システム全体でセッションの直接取得（IHttpContextAccessor）を使えるように登録
+            builder.Services.AddHttpContextAccessor();
+
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            // -----------------------------------------------------------------------
+            // ★【追加】セッション機能のサービス登録（一時記憶の容量を確保する設定）
+            // -----------------------------------------------------------------------
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(20); // 20分間操作がないと自動リセット
+                options.Cookie.HttpOnly = true; // セキュリティ対策
+                options.Cookie.IsEssential = true; // セッションに必須の設定
+            });
 
             // DB接続文字列の取得とDBコンテキストの登録(SQLite)
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? string.Empty;
@@ -44,6 +55,12 @@ namespace Songapp
 
             app.UseHttpsRedirection();
             app.UseRouting();
+
+            // -----------------------------------------------------------------------
+            // ★【追加】セッション機能を有効化（※必ずUseRoutingとUseAuthorizationの間に配置）
+            // -----------------------------------------------------------------------
+            app.UseSession();
+
             app.UseAuthorization();
             app.MapStaticAssets();
 

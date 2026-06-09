@@ -33,10 +33,10 @@ namespace Songapp.Controllers // このプログラムがどこに属してい�
         /// <param name="context">DBコンテキスト(接続管理).</param>
         /// <param name="logger">ロガー.</param>
         /// <param name="environment">環境.</param>
-        public HomeController(SongDbContext context, ILogger<HomeController> logger, IWebHostEnvironment environment) // 起動時に自動で動く初期設定（引数で3つの道具を受け取る）
+        public HomeController(SongDbContext context, ILogger<HomeController> logger, IWebHostEnvironment environment, IHttpContextAccessor httpContextAccessor) // 起動時に自動で動く初期設定（引数で3つの道具を受け取る）
             : base(context, logger, environment) // 親クラス（BaseController）の初期設定へ受け取った道具を渡す
         { // コンストラクタの実際の初期化処理がここから始まる
-            this.service = new SongModel(context, logger); // sreviceのセッティング
+            this.service = new SongModel(context, logger, httpContextAccessor); // sreviceのセッティング
         } // コンストラクタの処理が終了
 
         /// <summary>
