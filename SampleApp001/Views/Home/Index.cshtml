@@ -1,11 +1,11 @@
 ﻿@model Songapp.ViewModel.SongIndexViewModel //画面で使うviewmodelの指定
 @{
-ViewData["Title"] = "Song Page";
+    ViewData["Title"] = "Song Page";
 }
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="mb-0" data-comment="画面の大見出しとして楽曲検索と表示">楽曲検索</h2>
-        <div class="alert alert-info">現在認識しているログインユーザー名：【@Context.Session.GetString("LoginUser")】</div>
+        <div class="alert alert-info">こんにちは：@Context.Session.GetString("LoginUser")さん</div>
         <a asp-action="Edit" asp-route-id="0" class="btn btn-success" data-comment="新規追加画面へ移動するためのボタンリンク">追加はこちら</a>
     </div>
     <form method="get">
@@ -22,7 +22,7 @@ ViewData["Title"] = "Song Page";
         </div>
         <div class="card shadow-sm">
             <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0" data-comment="楽曲一覧を表示するための表を作成">
+                <table class="table table-hover align-middle mb-0" style="table-layout: fixed; width: 100%;" data-comment="楽曲一覧を表示するための表を作成">
                     <thead class="table-light">
                         <tr>
                             <th>曲名</th>
@@ -36,7 +36,7 @@ ViewData["Title"] = "Song Page";
                         @foreach (var item in Model.Songs)
                         {
                             <tr data-comment="データベースから取得した楽曲リストの中身をC#のforeachを使って1件ずつ取り出して繰り返す">
-                                <td class="fw-bold">@item.Song</td>
+                                <td class="fw-bold text-truncate">@item.Song</td>
                                 <td>@item.Group</td>
                                 <td>@item.Artist</td>
                                 <td>@item.History</td>
@@ -47,13 +47,16 @@ ViewData["Title"] = "Song Page";
                             <tr>
                                 <td colspan="5" class="p-0 border-bottom-0">
                                     <div id="detail@(item.Id)" class="bg-light p-3 border-top border-bottom" style="display:none;" data-comment="楽曲ごとID名が自動で割り振られる詳細エリア">
-                                        <div class="mb-3">
-                                            <strong class="d-block text-muted small mb-1">歌詞</strong>
-                                            <div class="text-secondary" style="white-space: pre-line;">@item.Lyric</div>
-                                        </div>
-                                        <div>
+                                        
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <strong class="text-muted small">歌詞</strong>
                                             <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-success" data-comment="詳細エリアの中にその曲を編集するための変更するボタンを設置">変更する</a>
                                         </div>
+
+                                        <div class="mb-3">
+                                            <div class="text-secondary" style="white-space: pre-line; word-break: break-all;">@item.Lyric</div>
+                                        </div>
+
                                     </div>
                                 </td>
                             </tr>
@@ -67,13 +70,14 @@ ViewData["Title"] = "Song Page";
 
 @section Scripts {
     <script>
-                         function slide(btn,id){
-                             $('#detail'+id).slideToggle(function(){// 1. 対象の詳細エリア（#detail+ID）の表示・非表示をアニメーション付きで切り替える
-                                  if ($('#detail'+id).is(':visible')) {// 2. アニメーション完了後、現在の表示状態（見えているかどうか）を判定
-                                      $(btn).text('⇧');// 見えているなら、ボタンの文字を⇧にする
-                                   } else {
-                                       $(btn).text('⇩'); // 見えていないなら、ボタンの文字を⇩にする
-                                     }
-                           })
-        }</script>
-    }
+        function slide(btn,id){
+            $('#detail'+id).slideToggle(function(){// 1. 対象の詳細エリア（#detail+ID）の表示・非表示をアニメーション付きで切り替える
+                if ($('#detail'+id).is(':visible')) {// 2. アニメーション完了後、現在の表示状態（見えているかどうか）を判定
+                    $(btn).text('⇧');// 見えているなら、ボタンの文字を⇧にする
+                } else {
+                    $(btn).text('⇩'); // 見えていないなら、ボタンの文字を⇩にする
+                }
+            })
+        }
+    </script>
+}

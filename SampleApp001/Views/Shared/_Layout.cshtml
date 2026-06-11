@@ -1,50 +1,55 @@
-﻿<!DOCTYPE html> <!--ＨＴＭＬ５で記述されたドキュメントであることをブラウザに宣言-->
-<html lang="en"> <!--ページの基本言語を英語に指定してドキュメント全体を囲むルートタグ-->
+﻿<!DOCTYPE html>
+<html lang="en" data-comment="ＨＴＭＬ５で記述されたドキュメントであることをブラウザに宣言。ページの基本言語を英語に指定してドキュメント全体を囲むルートタグ">
 <head>
-    <meta charset="utf-8" /> <!--ページの文字コードをＵＴＦ－８に設定して日本語の文字化けを完全に防ぐ-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!--閲覧する端末の画面幅に合わせて表示サイズを自動調整するレスポンシブ対応の設定-->
-    <title>@ViewData["Title"] - SampleApp001</title> <!--各コントローラから渡された画面個別のタイトルを動的に埋め込んでブラウザのタブに表示-->
-    <script type="importmap"></script> <!--モダンなＪａｖａＳｃｒｉｐｔモジュールの依存関係を管理・解決するためのインポートマップ設定-->
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /> <!--デザインフレームワークであるＢｏｏｔｓｔｒａｐの共通スタイルシートを読み込み-->
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /> <!--独自にカスタマイズした共通ＣＳＳを読み込み（ファイル更新時にキャッシュを強制クリアする属性付き）-->
-    <link rel="stylesheet" href="~/SampleApp001.styles.css" asp-append-version="true" /> <!--アプリケーション全体でビルド時に自動生成される画面固有の分離されたスタイルシート-->
+    <meta charset="utf-8" data-comment="ページの文字コードをＵＴＦ－８に設定して日本語の文字化けを完全に防ぐ" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" data-comment="閲覧する端末の画面幅に合わせて表示サイズを自動調整するレスポンシブ対応の設定" />
+    <title data-comment="各コントローラから渡された画面個別のタイトルを動的に埋め込んでブラウザのタブに表示">@ViewData["Title"] - SampleApp001</title>
+    <script type="importmap" data-comment="モダンなＪａｖａＳｃｒｉｐｔモジュールの依存関係を管理・解決するためのインポートマップ設定"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" data-comment="デザインフレームワークであるＢｏｏｔｓｔｒａｐの共通スタイルシートを読み込み" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" data-comment="独自にカスタマイズした共通ＣＳＳを読み込み（ファイル更新時にキャッシュを強制クリアする属性付き）" />
+    <link rel="stylesheet" href="~/SampleApp001.styles.css" asp-append-version="true" data-comment="アプリケーション全体でビルド時に自動生成される画面固有の分離されたスタイルシート" />
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100" data-comment="各個別画面の最下部で定義された画面専用スクリプト（＠section Scripts）をこの位置に非同期で結合して展開する処理">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"> <!--画面幅に応じて伸縮し、白い背景と下境界線、うっすらとした影を持つナビゲーションバー-->
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3" data-comment="画面幅に応じて伸縮し、白い背景と下境界線、うっすらとした影を持つナビゲーションバー">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">楽曲検索</a> <!--左端に配置されるアプリケーションのメインタイトルリンク（HomeControllerのIndex画面へ遷移する）-->
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" data-comment="左端に配置されるアプリケーションのメインタイトルリンク（HomeControllerのIndex画面へ遷移する）">楽曲検索</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span> <!--画面が狭くなったスマートフォン表示時にメニューを開閉するための三本線のハンバーガーメニューアイコン-->
+                        aria-expanded="false" aria-label="Toggle navigation" data-comment="画面が狭くなったスマートフォン表示時にメニューを開閉するための三本線のハンバーガーメニューアイコン">
+                    <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1"> <!--ナビゲーションリンクを横並びのリスト形式で配置するための要素の開始-->
+                    <ul class="navbar-nav flex-grow-1" data-comment="ナビゲーションリンクを横並びのリスト形式で配置するための要素の開始">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a> <!--ホーム画面へ遷移するためのダークカラーテキストのリンク（HomeControllerのIndexアクションを呼び出す）-->
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index" data-comment="ホーム画面へ遷移するためのダークカラーテキストのリンク（HomeControllerのIndexアクションを呼び出す）">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> <!--プライバシー画面へ遷移するためのダークカラーテキストのリンク（HomeControllerのPrivacyアクションを呼び出す）-->
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy" data-comment="プライバシー画面へ遷移するためのダークカラーテキストのリンク（HomeControllerのPrivacyアクションを呼び出す）">Privacy</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav" data-comment="右端に配置するログアウトリンク（LoginControllerのLogin画面へ戻る）">
+                        <li class="nav-item">
+                            <a class="nav-link text-danger" asp-area="" asp-controller="Login" asp-action="Logout" data-comment="ログアウトしてセッションを削除しログイン画面へ戻るためのリンクボタン（分かりやすいように赤文字に設定）">ログアウト</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3"> <!--検索画面や編集画面など、呼び出された機能の主要なコンテンツが配置される中心領域（下部に余白を確保）-->
-            @RenderBody() <!--呼び出された各画面（Ｉｎｄｅｘ．ｃｓｈｔｍｌやＥｄｉｔ．ｃｓｈｔｍｌなど）の本体コードがここに動的に埋め込まれる最重要処理-->
+    <div class="container flex-grow-1">
+        <main role="main" class="pb-3" data-comment="検索画面や編集画面など、呼び出された機能の主要なコンテンツが配置される中心領域（下部に余白を確保）。呼び出された各画面（Ｉｎｄｅｘ．ｃｓｈｔｍｌやＥｄｉｔ．ｃｓｈｔｍｌなど）の本体コードがここに動的に埋め込まれる最重要処理">
+            @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted"> <!--画面の最下部に常に固定表示される、上部に境界線を持った共通フッター領域（文字色を薄いグレーに設定）-->
-        <div class="container">
-            &copy; 2026 - SampleApp001 - <a asp-area="" asp-controller="Home" asp-action="log outy">Privacy</a> <!--著作権の年号表示と、特定のページへのリンク-->
+    <footer class="border-top footer text-muted" data-comment="画面の最下部に常に固定表示される、上部に境界線を持った共通フッター領域（文字色を薄いグレーに設定）">
+        <div class="container" data-comment="著作権の年号表示と、特定のページへのリンク">
+            &copy; 2026 - SampleApp001 - <a asp-area="" asp-controller="Home" asp-action="log outy">Privacy</a>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script> <!--画面の動的制御や非同期通信、要素のアニメーションを動かすためのｊＱｕｅｒｙライブラリの読み込み-->
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> <!--ドロップダウンやスマホ用メニュー開閉などのＢｏｏｔｓｔｒａｐの動的機能を有効化するスクリプトの読み込み-->
-    <script src="~/js/site.js" asp-append-version="true"></script> <!--アプリケーション全体で共通して使用する独自に実装した共通ＪａｖａＳｃｒｉｐｔファイルの読み込み-->
-    @await RenderSectionAsync("Scripts", required: false) <!--各個別画面の最下部で定義された画面専用スクリプト（＠section Scripts）をこの位置に非同期で結合して展開する処理-->
+    <script src="~/lib/jquery/dist/jquery.min.js" data-comment="画面の動的制御や非同期通信、要素のアニメーションを動かすためのｊＱｕｅｒｙライブラリの読み込み"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" data-comment="ドロップダウンやスマホ用メニュー開閉などのＢｏｏｔｓｔｒａｐの動的機能を有効化するスクリプトの読み込み"></script>
+    <script src="~/js/site.js" asp-append-version="true" data-comment="アプリケーション全体で共通して使用する独自に実装した共通ＪａｖａＳｃｒｉｐｔファイルの読み込み"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

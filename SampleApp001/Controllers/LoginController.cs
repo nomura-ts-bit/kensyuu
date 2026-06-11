@@ -86,5 +86,18 @@ namespace Songapp.Controllers // このプログラムがどこに属してい�
             var products = await this.service.EditUser(loginvm); // serviceのユーザー情報更新処理の呼び出し
             return this.RedirectToAction("Login"); // 更新が完璧に終わったらログイン画面へ移動
         }
+
+        /// <summary>
+        /// ★【追加】ログアウト処理を行います.
+        /// </summary>
+        /// <returns>ログイン画面へのリダイレクト.</returns>
+        public IActionResult Logout()
+        {
+            // セッションの「LoginUser」の引き出しを空っぽにして記憶を消す
+            this.HttpContext.Session.Remove("LoginUser");
+
+            // 完全に消去したら、ログイン画面（Loginアクション）へ強制移動
+            return this.RedirectToAction("Login");
+        }
     }
 }

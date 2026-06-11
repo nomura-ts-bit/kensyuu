@@ -1,15 +1,16 @@
-﻿@model Songapp.ViewModel.LoginViewModel //画面で使うviewmodelの指定
+﻿@model Songapp.ViewModel.LoginViewModel
 @{
-ViewData["Title"] = "Edit Page"; //ブラウザのタブに表示される名前を設定    
-Layout = null; //共通メニューを使わず単体で画面を作る設定
+    ViewData["Title"] = "Edit Page";
+    Layout = null;
 }
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" data-comment="画面で使うviewmodelの指定。ブラウザのタブに表示される名前を設定し、共通メニューを使わず単体で画面を作る設定">
 <head>
     <meta charset="utf-8" data-comment="ページの文字コードをＵＴＦ－８に設定して日本語の文字化けを完全に防ぐ" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" data-comment="閲覧する端末の画面幅に合わせて表示サイズを自動調整するレスポンシブ対応の設定" />
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" data-comment="外部デザインフレームワークであるブーストラップの読み込み" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" data-comment="目のマークなどのアイコンマークを表示するためのブーストラップアイコンの読み込み" />
 </head>
 <body class="bg-light d-flex align-items-center justify-content-center vh-100">
     <div class="card shadow" style="width: 100%; max-width: 400px;">
@@ -24,13 +25,20 @@ Layout = null; //共通メニューを使わず単体で画面を作る設定
                         <span asp-validation-for="Username" class="text-danger small" data-comment="ユーザー名の入力欄にエラーがあった場合、その対象項目のすぐ下にエラーメッセージを赤い文字で表示"></span>
                     </div>
                 </div>
+                
                 <div class="mb-3">
                     <label class="form-label">パスワード</label>
-                    <input type="password" asp-for="Password" class="form-control" placeholder="パスワードを入力してください" data-comment="Passwordと直結させるタグヘルパー(type=passwordによって伏字化)" />
+                    <div class="input-group">
+                        <input type="password" id="passwordInput" asp-for="Password" class="form-control" placeholder="パスワードを入力してください" data-comment="Passwordと直結させるタグヘルパー(type=passwordによって伏字化)。JavaScript制御用にIDを付与" />
+                        <button class="btn btn-outline-secondary" type="button" id="togglePassword" data-comment="パスワードの可視化・不可視化を切り替えるためのクリックボタン。中に目のアイコンを配置">
+                            <i class="bi bi-eye" id="toggleIcon" data-comment="現在の表示状態（見える・隠す）を切り替えて表す目の形をしたアイコンマーク"></i>
+                        </button>
+                    </div>
                     <div class="mt-1">
                         <span asp-validation-for="Password" class="text-danger small" data-comment="パスワードの入力欄にエラーがあった場合、その対象項目のすぐ下にエラーメッセージを赤い文字で表示"></span>
                     </div>
                 </div>
+                
                 <input type="submit" class="btn btn-primary w-100 mt-3 mb-4" value="新規作成" asp-action="Edit" onclick="return confirm('この内容で登録しますか？')" data-comment="コントローラーのEdit処理へデータを送る。登録前の確認ダイアログを表示" />
                 <div class="text-center pt-3 border-top">
                     <p class="text-muted small mb-2" data-comment="ログイン画面へ戻るための案内テキスト">すでにアカウントをお持ちの方</p>
@@ -38,5 +46,25 @@ Layout = null; //共通メニューを使わず単体で画面を作る設定
                 </div>
             </form>
         </div>
-    </div></body>
+    </div>
+
+    <script data-comment="目のマークボタンが押された瞬間に、パスワード欄の入力属性（password/text）とアイコンの見た目を交互に入れ替えるための制御JavaScript処理">
+            document.getElementById('togglePassword').addEventListener('click', function () {
+                const passwordInput = document.getElementById('passwordInput');
+                const toggleIcon = document.getElementById('toggleIcon');
+            
+                if (passwordInput.type === 'password') {
+                    // 文字が見える状態（text）に変えて、アイコンを斜線付きの目（bi-eye-slash）にする
+                    passwordInput.type = 'text';
+                    toggleIcon.classList.remove('bi-eye');
+                    toggleIcon.classList.add('bi-eye-slash');
+                } else {
+                    // 文字を隠す状態（password）に戻して、アイコンを通常の目（bi-eye')にする
+                    passwordInput.type = 'password';
+                    toggleIcon.classList.remove('bi-eye-slash');
+                    toggleIcon.classList.add('bi-eye');
+                }
+            });
+    </script>
+</body>
 </html>

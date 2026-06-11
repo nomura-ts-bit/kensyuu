@@ -5,17 +5,21 @@
 }
 <!DOCTYPE html>
 <html lang="ja">
-    <head>
+<head>
     <meta charset="utf-8" data-comment="ページの文字コードをＵＴＦ－８に設定して日本語の文字化けを完全に防ぐ" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" data-comment="閲覧する端末の画面幅に合わせて表示サイズを自動調整するレスポンシブ対応の設定" />
     <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" data-comment="外部デザインフレームワークであるブーストラップの読み込み" /></head><body class="bg-light d-flex align-items-center justify-content-center vh-100">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" data-comment="外部デザインフレームワークであるブーストラップの読み込み" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" data-comment="目のマークなどのアイコンマークを表示するためのブーストラップアイコンの読み込み" />
+</head>
+<body class="bg-light d-flex align-items-center justify-content-center vh-100">
     <div class="card shadow" style="width: 100%; max-width: 400px;">
         <div class="card-body p-4">
             <h2 class="text-center mb-4" data-comment="画面中央に表示される見出し文字列を中央寄せにして下部に適切な余白を確保">ログイン</h2>
             <form method="post">
                 @Html.AntiForgeryToken()
                 <div asp-validation-summary="ModelOnly" class="text-danger small mb-3" data-comment="ユーザー名やパスワードの間違いなどモデル全体に関するエラーメッセージを表示する領域"></div>
+                
                 <div class="mb-3">
                     <label class="form-label" data-comment="入力欄の上に配置される項目名ラベルをモダンなスタイルで表示">ユーザー名</label>
                     <input type="text" asp-for="Username" class="form-control" placeholder="ユーザー名を入力してください" data-comment="データを設計図のUsernameプロパティと直結させフォーカス時に青く光る角丸のテキスト入力欄" />
@@ -23,13 +27,20 @@
                         <span asp-validation-for="Username" class="text-danger small" data-comment="ユーザー名の入力内容に検証エラーがあった場合に対象のすぐ下にエラーメッセージを小さな赤文字で動的に表示"></span>
                     </div>
                 </div>
+                
                 <div class="mb-3">
                     <label class="form-label">パスワード</label>
-                    <input type="password" asp-for="Password" class="form-control" placeholder="パスワードを入力してください" data-comment="データを設計図のPasswordプロパティと直結させ入力された文字を黒丸などの伏字で保護する入力欄" />
+                    <div class="input-group">
+                        <input type="password" id="passwordInput" asp-for="Password" class="form-control" placeholder="パスワードを入力してください" data-comment="データを設計図のPasswordプロパティと直結させ入力された文字を黒丸などの伏字で保護する入力欄。JavaScript制御用にIDを付与" />
+                        <button class="btn btn-outline-secondary" type="button" id="togglePassword" data-comment="パスワードの可視化・不可視化を切り替えるためのクリックボタン。中に目のアイコンを配置">
+                            <i class="bi bi-eye" id="toggleIcon" data-comment="現在の表示状態（見える・隠す）を切り替えて表す目の形をしたアイコンマーク"></i>
+                        </button>
+                    </div>
                     <div class="mt-1">
                         <span asp-validation-for="Password" class="text-danger small" data-comment="パスワードの入力内容に検証エラーがあった場合に対象のすぐ下にエラーメッセージを小さな赤文字で動的に表示"></span>
                     </div>
                 </div>
+                
                 <input type="submit" class="btn btn-primary w-100 mt-3 mb-4" value="ログイン" data-comment="入力された内容を送信してログイン認証処理を実行するためのボックス幅いっぱいに広がった青い送信ボタン" />
                 <div class="text-center pt-3 border-top">
                     <p class="text-muted small mb-2" data-comment="新規登録へ誘導するための案内テキストを薄いグレーの小さな文字で表示">新規作成はこちら</p>
@@ -37,4 +48,25 @@
                 </div>
             </form>
         </div>
-    </div></body></html>
+    </div>
+
+    <script data-comment="目のマークボタンが押された瞬間に、パスワード欄の入力属性（password/text）とアイコンの見た目を交互に入れ替えるための制御JavaScript処理">
+            document.getElementById('togglePassword').addEventListener('click', function () {
+                const passwordInput = document.getElementById('passwordInput');
+                const toggleIcon = document.getElementById('toggleIcon');
+            
+                if (passwordInput.type === 'password') {
+                    // 文字が見える状態（text）に変えて、アイコンを斜線付きの目（bi-eye-slash）にする
+                    passwordInput.type = 'text';
+                    toggleIcon.classList.remove('bi-eye');
+                    toggleIcon.classList.add('bi-eye-slash');
+                } else {
+                    // 文字を隠す状態（password）に戻して、アイコンを通常の目（bi-eye')にする
+                    passwordInput.type = 'password';
+                    toggleIcon.classList.remove('bi-eye-slash');
+                    toggleIcon.classList.add('bi-eye');
+                }
+            });
+    </script>
+</body>
+</html>

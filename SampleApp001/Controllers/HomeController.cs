@@ -9,12 +9,13 @@
 // -----------------------------------------------------------------------
 namespace Songapp.Controllers // このプログラムがどこに属しているか（住所）を表す
 { 
-    // 外部の道具の引用
-    using System.Diagnostics; // システム診断やエラー追跡（Activity）の道具を引用
     using Microsoft.AspNetCore.Mvc; // MVC（Controller、IActionResult、HttpPostなど）の基本道具を引用
+    using Microsoft.AspNetCore.Mvc.Filters;
     using Songapp.Models; // プロジェクト内のModelsフォルダ（DbContextやエラー用Model）を引用
     using Songapp.Services; // ビジネスロジックを身代わりに実行してくれるサービス層（SongModel）を引用
     using Songapp.ViewModel; // 画面の表示・入力専用に用意したデータ構造（ViewModel）のフォルダを引用
+    // 外部の道具の引用
+    using System.Diagnostics; // システム診断やエラー追跡（Activity）の道具を引用
     
     /// <summary>
     /// ホーム画面コントローラークラス.
@@ -38,6 +39,25 @@ namespace Songapp.Controllers // このプログラムがどこに属してい�
         { // コンストラクタの実際の初期化処理がここから始まる
             this.service = new SongModel(context, logger, httpContextAccessor); // sreviceのセッティング
         } // コンストラクタの処理が終了
+
+        /// <summary>
+        /// ★【追加】画面が開く前に自動で動く割り込みチェック（不正ログイン防止）.
+        /// </summary>
+        /// <param name="context">アクション実行時の前後関係データ.</param>
+        public override void OnActionExecuting(ActionExecutingContext context)
+        {
+            base.OnActionExecuting(context);
+
+            // セッションの「LoginUser」の引き出しから、ログイン中のユーザー名を取り出す
+            string? loginUser = this.HttpContext.Session.GetString("LoginUser");
+
+            // もし引き出しが空っぽ（未ログイン状態）だった場合
+            if (string.IsNullOrEmpty(loginUser))
+            {
+                // 強制的にログイン画面（LoginControllerのLoginアクション）へ突き返す
+                context.Result = this.RedirectToAction("Login", "Login");
+            }
+        }
 
         /// <summary>
         /// Index画面を表示します.
