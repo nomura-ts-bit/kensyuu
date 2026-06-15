@@ -8,11 +8,11 @@
 // 更新日：
 // -----------------------------------------------------------------------
 
-namespace Songapp.Services//ネームスペースを定義(住所)
+namespace Songapp.Services// ネームスペースを定義(住所)
 {
-    using Microsoft.AspNetCore.Mvc;//SP.NET Core MVCの機能を利用可能にする
-    using Microsoft.EntityFrameworkCore;//SP.NET Core MVCの機能を利用可能にする
-    using Songapp.Common;//ViewModelクラス群を読み込み↓
+    using Microsoft.AspNetCore.Mvc;// SP.NET Core MVCの機能を利用可能にする
+    using Microsoft.EntityFrameworkCore;// SP.NET Core MVCの機能を利用可能にする
+    using Songapp.Common;// ViewModelクラス群を読み込み↓
     using Songapp.Models;
     using SongApp.Models;
     using Songapp.Models.Entity;
@@ -32,8 +32,8 @@ namespace Songapp.Services//ネームスペースを定義(住所)
         /// <param name="logger">ロガーインスタンス.</param>
         private readonly IHttpContextAccessor _httpContextAccessor;　// セッションを直接覗き込むための専用の通り道
         public SongModel(SongDbContext context, ILogger logger, IHttpContextAccessor httpContextAccessor)
-            : base(context, logger)//クラスのインスタンスが生成されるときに最初に動くコンストラクタ
-                                   //データベース接続を管理する context と、ログを出力する logger を受け取り、そのまま親クラス（base）に引き渡して初期化
+            : base(context, logger)// クラスのインスタンスが生成されるときに最初に動くコンストラクタ
+                                   // データベース接続を管理する context と、ログを出力する logger を受け取り、そのまま親クラス（base）に引き渡して初期化
         {
             // 受け取った道具を保存する
             this._httpContextAccessor = httpContextAccessor;
@@ -51,7 +51,7 @@ namespace Songapp.Services//ネームスペースを定義(住所)
         /// <param name="indexvm">検索条件および結果を保持するViewModel.</param>
         /// <returns>楽曲一覧が格納されたViewModel. 引数がNullの場合はNullを返す.</returns>
         public async Task<SongIndexViewModel?> IndexWhere(SongIndexViewModel? indexvm)
-        //検索条件を受け取り、合致する楽曲一覧を返す非同期メソッドの開始
+        // 検索条件を受け取り、合致する楽曲一覧を返す非同期メソッドの開始
         {
             if (indexvm == null)
             {
